@@ -6,13 +6,14 @@ import java.util.concurrent.Future;
 
 public class Task2 {
     public static void main(String[] args) throws Exception {
+	  // Создание пула потоков с лимитом в 2 потока
         ExecutorService es = Executors.newFixedThreadPool(2); // лимит на 2 потока
 
         // ввод числа
         Scanner scan = new Scanner(System.in);
         int input1 = Integer.parseInt(scan.nextLine());
 
-        // создание Future
+        // Создание объекта Future для хранения результата выполнения асинхронной задачи
         Future<?> ftr = es.submit(new MyRunnable(input1));
 
         while (true) {
@@ -20,10 +21,10 @@ public class Task2 {
             if (!ftr.isDone()) {
                 es.submit(new MyRunnable(Integer.parseInt(input2)));
             }
-            break;
+            break;// Выход из цикла 
         }
 
-        es.shutdown();
+        es.shutdown();// Завершение работы пула потоков
     }
 }
 

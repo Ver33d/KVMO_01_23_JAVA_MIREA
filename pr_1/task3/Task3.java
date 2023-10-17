@@ -6,34 +6,36 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Task3{
     public static void main(String[] args) {
+        // Создание экземпляра FileQueue с лимитом 5 файлов
         FileQueue queue = new FileQueue(5);
         String[] types = new String[] {"XML", "JSON", "XLS"}; // типы файлов
         FileHandler[] fileHandlers = new FileHandler[3];
         Thread[] handlerThreads = new Thread[3];
-
+	// Создание и запуск потоков обработки файлов
         for (int i = 0; i < fileHandlers.length; i++){
             fileHandlers[i] = new FileHandler(queue, types[i], queue.lock, queue.notEmpty);
             handlerThreads[i] = new Thread(fileHandlers[i]);
             handlerThreads[i].start();
         }
-
+	// Создание и запуск потока генерации файлов
         FileGenerator fg = new FileGenerator(queue, queue.lock, queue.notFull, types);
         Thread gt = new Thread(fg);
         gt.start();
     }
 }
 
-// пользовательский класс для фвйлов
+//  Класс File представляет собой файл с определенным типом и размером
 class File {
     String type;
     Integer size;
 
-    public File(String type, Integer size) { // конструктор файлов
-        this.type = type;
-        this.size = size;
+    public File(String type, Integer size) { //  Конструктор класса File для создания файлов с заданным типом и размером.
+        this.type = type; //Тип файла
+        this.size = size; //Размер файла
     }
 }
 
+//Класс FileGenerator реализует поток для генерации файлов и помещения их в очередь.
 class FileGenerator implements Runnable {
     private final FileQueue queue;
     private final Lock lock;
@@ -78,7 +80,7 @@ class FileGenerator implements Runnable {
     }
 }
 
-// класс обработчика файлов
+// класс обработчика файлов. Класс FileHandler реализует поток для обработки файлов из очереди.
 class FileHandler implements Runnable {
     private final FileQueue queue;
     private final String type;
@@ -117,18 +119,19 @@ class FileHandler implements Runnable {
     }
 }
 
+//Класс FileQueue представляет собой очередь файлов с определенной емкостью
 class FileQueue {
     public int capacity;
     public Queue<File> queue = new LinkedList<>();
     public ReentrantLock lock = new ReentrantLock();
     public Condition notFull = lock.newCondition();
     public Condition notEmpty = lock.newCondition();
-
+    //Конструктор класса FileQueue для создания очереди с заданной емкостью
     public FileQueue(int capacity) {
-        this.capacity = capacity;
+        this.capacity = capacity;  //Емкость очереди
     }
-
-    public void add(File file) throws InterruptedException {
+    //Добавляет файл в очередь
+    public void add(File file) throws InterruptedException { //file - Файл для добавления
         lock.lock();
         try {
             while (queue.size() == capacity) {
@@ -140,7 +143,7 @@ class FileQueue {
             lock.unlock();
         }
     }
-
+    //Удаляет файл из очереди
     public void remove() throws InterruptedException {
         lock.lock();
         try {
@@ -153,12 +156,12 @@ class FileQueue {
             lock.unlock();
         }
     }
-
+    //Возвращает размер очереди
     public int size() {
-        return queue.size();
+        return queue.size();  //Размер очереди
     }
-
+    //Возвращает файл, находящийся в начале очереди, но не удаляет его
     public File peek() {
-        return queue.peek();
+        return queue.peek();  //Первый файл в очереди
     }
 }
