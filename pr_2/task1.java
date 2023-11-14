@@ -1,4 +1,4 @@
-package pr1.task1; // Определение пакета, в котором находится класс task1.
+package pr1.Task1; // Определение пакета, в котором находится класс task1.
 
 import java.io.File;
 import java.io.IOException;
