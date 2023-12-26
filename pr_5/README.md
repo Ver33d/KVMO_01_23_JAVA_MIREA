@@ -10,22 +10,21 @@
 #Зависимости
 
 Для правильного функционирования FileController импортированы следующие библиотеки и классы:
-
-  java.io.IOException
-  java.util.Objects
-  org.springframework.beans.factory.annotation.Autowired
-  org.springframework.http.HttpHeaders
-  org.springframework.http.MediaType
-  org.springframework.http.ResponseEntity
-  org.springframework.util.StringUtils
-  org.springframework.web.bind.annotation.GetMapping
-  org.springframework.web.bind.annotation.PathVariable
-  org.springframework.web.bind.annotation.PostMapping
-  org.springframework.web.bind.annotation.RequestParam
-  org.springframework.web.bind.annotation.RestController
-  org.springframework.web.multipart.MultipartFile
-  org.springframework.web.servlet.support.ServletUriComponentsBuilder
-  ru.mirea.practice5.services.FileService
+    java.io.IOException
+    java.util.Objects
+    org.springframework.beans.factory.annotation.Autowired
+    org.springframework.http.HttpHeaders
+    org.springframework.http.MediaType
+    org.springframework.http.ResponseEntity
+    org.springframework.util.StringUtils
+    org.springframework.web.bind.annotation.GetMapping
+    org.springframework.web.bind.annotation.PathVariable
+    org.springframework.web.bind.annotation.PostMapping
+    org.springframework.web.bind.annotation.RequestParam
+    org.springframework.web.bind.annotation.RestController
+    org.springframework.web.multipart.MultipartFile
+    org.springframework.web.servlet.support.ServletUriComponentsBuilder
+    ru.mirea.practice5.services.FileService
 
   Конечные точки
   Загрузка файла
